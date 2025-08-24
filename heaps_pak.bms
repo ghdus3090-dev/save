@@ -22,10 +22,14 @@ for i = 0 < fileCount
         cleanexit
     endif
     get nameLen short
-    if nameLen <= 0 || nameLen > 0x400
+    if nameLen < 0 || nameLen > 0x400
         print "ERROR: invalid name length %nameLen%"
         cleanexit
     endif
-    getdstring name nameLen
+    if nameLen == 0
+        string name p "entry_%i%.bin"
+    else
+        getdstring name nameLen
+    endif
     log name offset size
 next i
