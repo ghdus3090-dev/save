@@ -1,6 +1,7 @@
 # QuickBMS script for a simple Heaps.io .pak archive
 # Adjust field sizes and structure according to actual format.
-idstring "PACK"
+# Heaps archives begin with the four-byte signature "PAK\0".
+idstring "PAK\x00"
 get fileCount long
 for i = 0 < fileCount
     get nameLen long
