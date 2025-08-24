@@ -1,0 +1,11 @@
+# QuickBMS script for a simple Heaps.io .pak archive
+# Adjust field sizes and structure according to actual format.
+idstring "PACK"
+get fileCount long
+for i = 0 < fileCount
+    get nameLen long
+    getdstring name nameLen
+    get offset long
+    get size long
+    log name offset size
+next i
