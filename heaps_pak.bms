@@ -1,7 +1,13 @@
 # QuickBMS script for a simple Heaps.io .pak archive
 # Adjust field sizes and structure according to actual format.
 # Heaps archives begin with the four-byte signature "PAK\0".
-idstring "PAK\x00"
+# Manually verify the signature so QuickBMS doesn't report a misleading
+# "PACK" expectation if the check fails.
+get SIGNATURE long
+if SIGNATURE != 0x004B4150
+    print "ERROR: expected 'PAK\\0' signature but found %SIGNATURE|x%"
+    cleanexit
+endif
 get fileCount long
 for i = 0 < fileCount
     get nameLen long
