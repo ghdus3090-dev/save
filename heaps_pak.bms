@@ -27,7 +27,7 @@ for i = 0 < fileCount
         cleanexit
     endif
     if nameLen == 0
-        string name p "entry_%i%.bin"
+        string name p "entry_%d.bin" i
     else
         getdstring name nameLen
     endif
