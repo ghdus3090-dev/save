@@ -8,11 +8,24 @@ if SIGNATURE != 0x004B4150
     print "ERROR: expected 'PAK\\0' signature but found %SIGNATURE|x%"
     cleanexit
 endif
+get FILESIZE asize
 get fileCount long
+if fileCount < 0 || fileCount > FILESIZE / 16
+    print "ERROR: invalid file count %fileCount%"
+    cleanexit
+endif
 for i = 0 < fileCount
-    get nameLen long
+    get nameLen short
+    if nameLen <= 0 || nameLen > 0x400
+        print "ERROR: invalid name length %nameLen%"
+        cleanexit
+    endif
     getdstring name nameLen
     get offset long
     get size long
+    if offset < 0 || size < 0 || offset + size > FILESIZE
+        print "ERROR: invalid offset/size for %name%"
+        cleanexit
+    endif
     log name offset size
 next i
